@@ -80,7 +80,7 @@ Thresholds live in `common/schemas.py` (`AUTO_APPROVE_THRESHOLD = 0.73`, `ESCALA
 ├── .env.example
 │
 ├── common/                  # shared utilities — provided, don't modify
-│   ├── llm.py               # ChatOpenAI factory (OpenRouter)
+│   ├── llm.py               # ChatOpenAI factory (OpenAI)
 │   ├── github.py            # httpx REST API client: fetch_pr / post_review_comment
 │   ├── db.py                # aiosqlite connection + write_audit_event
 │   └── schemas.py           # ReviewState (TypedDict) + PRAnalysis + AuditEntry (Pydantic)
@@ -100,7 +100,7 @@ Thresholds live in `common/schemas.py` (`AUTO_APPROVE_THRESHOLD = 0.73`, `ESCALA
 
 - Python 3.11+
 - [uv](https://docs.astral.sh/uv/) package manager
-- An [OpenRouter](https://openrouter.ai/keys) API key (free tier has $1 credit)
+- An [OpenAI API key](https://platform.openai.com/api-keys)
 - A GitHub Personal Access Token — see next section
 
 No Docker, no Postgres install, no `gh` CLI. The agent talks to GitHub directly via the REST API. Audit + checkpointer state both live in a single SQLite file (`./hitl_audit.db`) created automatically on first run.
@@ -133,7 +133,7 @@ The agent calls the GitHub REST API directly to **read PR diffs** and **post rev
 ```bash
 git clone <lab-repo-url> && cd Day27-Track3-HITL
 uv sync                                     # install Python deps
-cp .env.example .env && $EDITOR .env        # set OPENROUTER_API_KEY and GITHUB_TOKEN
+cp .env.example .env && $EDITOR .env        # set OPENAI_API_KEY and GITHUB_TOKEN
 ```
 
 The SQLite file `hitl_audit.db` is created on demand when exercise 4 runs.
